@@ -1,8 +1,9 @@
 "use client";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { Product } from "../types";
-import { addToCart }  from "../store/cartSlice";
+import { addToCart,removeFromCart }  from "../store/cartSlice";
 import Image from "next/image";
+import { RootState } from "../store/store";
 
 interface Props {
     product: Product;
@@ -10,13 +11,19 @@ interface Props {
 
 export default function ProductCard({product}: Props) {
     const dispatch = useDispatch();
+    const {items} = useSelector((state: RootState) => state.cart)
+    const isInCart = items.find(item => item.id === product.id)
 
     const handleAddToCart = () => {
-        dispatch(addToCart(product));
+        if(isInCart)  {
+            dispatch(removeFromCart(product.id));
+        } else {
+            dispatch(addToCart(product));
+        }
     };
 
     return (
-        <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition p-4">
+        <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition p-4">
             <div className="relative h-48 w-full mb-4">
                 <Image
                  src={product.thumbnail}
@@ -35,9 +42,12 @@ export default function ProductCard({product}: Props) {
                 <span className="text-xl font-bold text-emerald-600">${product.price}</span>
                 <button
                     onClick={handleAddToCart}
-                    className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-700 transition active:scale-95"
+                    className={isInCart ?
+                        "bg-emerald-400 text-white px-4 py-2 rounded-lg hover:bg-emerald-500 transition active:scale-95":
+                        "bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-700 transition active:scale-95"
+                    }
                 >
-                    В корзину
+                    {isInCart ? "В корзине" : "Добавить в корзину"}
                 </button>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import { Product } from "./types/index";
 import ProductCard from "./components/ProductCard";
+import { CategoryFilter } from "./components/CategoryFilter";
 
 async function getProducts(){
   const res = await fetch("https://dummyjson.com/products");

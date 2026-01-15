@@ -9,8 +9,7 @@ export default function Header() {
     return (
         <header className="bg-slate-900 text-white shadow-lg">
             <div className="max-w-7xl mx-auto px-4 py-4">
-                <div className="flex items-center justify-between">
-                    <div>
+                <div className="flex items-center justify-between">                  
                         <Link href="/" className="text-2xl font-bold hover:text-slate-300 transition">
                             E-comerence
                         </Link>
@@ -39,8 +38,7 @@ export default function Header() {
                                 )}
 
                             </Link>
-                        </nav>
-                    </div>
+                        </nav>      
                 </div>
             </div>
         </header>
